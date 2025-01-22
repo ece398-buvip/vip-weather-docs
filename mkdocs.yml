@@ -1,0 +1,73 @@
+site_name: ECE398 Weather Station Docs
+site_url: https://sitename.example/docs
+repo_url: https://github.com/ImtiazAtBradley/VIP_Weather
+theme:
+  name: material
+
+  # Font Configuration
+  font:
+    text: Red Hat Display
+    code: Red Hat Mono
+  features:
+    - navigation.footer
+    - navigation.sections
+  
+  favicon: images/favicon.png
+  icon:
+    logo: material/weather-lightning
+
+  # Colors
+  palette: 
+    # Dark theme
+    - scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Dark Mode
+      primary: red
+      accent: white
+    
+    # Light theme
+    - scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Light Mode
+      primary: red
+      accent: white
+
+# Copyright
+# copyright: Copyright &copy Bradley University 2025
+
+# Navigation
+nav:
+  - The ECE398 Weather Station: index.md
+  - Build Requirements: requirements.md
+  - Hardware Build: build.md
+  - Software Build: software-build.md
+  - API: api.md
+  - Broker: broker.md
+  - Website: website.md
+  - Firmware: firmware.md
+  
+# Extensions
+markdown_extensions:
+- attr_list
+# Emojis
+- pymdownx.emoji:
+    emoji_index: !!python/name:material.extensions.emoji.twemoji
+    emoji_generator: !!python/name:material.extensions.emoji.to_svg
+# Code block highlighting
+- pymdownx.highlight:
+    anchor_linenums: true
+    line_spans: __span
+    pygments_lang_class: true
+- pymdownx.inlinehilite
+- pymdownx.snippets
+- pymdownx.superfences:
+    custom_fences:
+            - name: mermaid
+              class: mermaid
+              format: !!python/name:pymdownx.superfences.fence_code_format
+- pymdownx.tabbed:
+      alternate_style: true
+- admonition
+- pymdownx.details
