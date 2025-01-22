@@ -57,3 +57,7 @@ Maintainers of the weather station should be proficient in the following technol
 
 ### Website
 * [Next.js](https://nextjs.org/) web framewortk
+
+## User Manual
+
+* TODO: LED Codes
