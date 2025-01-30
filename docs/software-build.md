@@ -4,10 +4,6 @@ This tutorial describes how to build the software suite for the weather station.
 
 Before building any software, you must have the most recent stable release of the weather station software suite located at our [GitHub Repository](https://github.com/ImtiazAtBradley/VIP_Weather/tree/main). All target devices must have the software needed to build the various services.
 
-!!! info "Transferring Source to Other Computers"
-
-    Because each target needs software (broker/api/firmware/website), it is recommended to get the repository on some development computer that will be able to "deploy" that software to those targets. For example, using a laptop to ssh into the server running the broker, or the api and website and copying the files over that connection. A great GUI tool for Windows to do this is [WinSCP](https://winscp.net/eng/index.php).
-
 ## Broker
 
 The Broker is the service that relays information between the deployed weather station, and the deployed server that holds the weather data. The broker is written using C++, using the [libcurl library](https://curl.se/libcurl/). Below is a simple block diagram of the broker's job:
@@ -74,6 +70,10 @@ You would run the broker like so:
 ```
 bradley-cast-broker https://your.domain.com/api/envdata ./your-key-file.key
 ```
+
+!!! danger "Broker Key Security"
+    
+    Part of the broker's API calls is a POST request containing an API key. **NEVER** use unsecured HTTP.
 
 ### Broker Protocol (Incoming from Radio)
 
