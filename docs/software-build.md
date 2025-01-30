@@ -91,8 +91,147 @@ T32.12|H89.34|P99.88|R1|L2
 
 ## API & Website
 
-* Firewall
-* Nginx
+The API handles retrieving and posting all data to the underlying redis database. All data must go through the API, including GET and POST requests. The API is built using [Node.js](https://nodejs.org/en) and is written in the [typescript](https://www.typescriptlang.org) language.
+
+!!! warning "Redis Database"
+
+    The redis database must be accessible at `localhost` on port `6379`. There is no security currently implemented, which is why this requirement exists.
+
+### Installing Redis
+
+Run the following to install redis (the database that stores all the weather data):
+
+```bash
+sudo apt-get install lsb-release curl gpg
+curl -fsSL https://packages.redis.io/gpg | sudo gpg --dearmor -o /usr/share/keyrings/redis-archive-keyring.gpg
+sudo chmod 644 /usr/share/keyrings/redis-archive-keyring.gpg
+echo "deb [signed-by=/usr/share/keyrings/redis-archive-keyring.gpg] https://packages.redis.io/deb $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/redis.list
+sudo apt-get update
+sudo apt-get install redis
+```
+
+Ensure the redis database is running by checking the service's status using `systemctl`. You want to make sure it is running:
+
+```bash
+systemctl status redis-server.service
+```
+
+Make redis database start when computer starts with:
+```bash
+sudo systemctl enable redis-server
+sudo systemctl start redis-server
+```
+
+### Installing Nodejs
+
+You must install Node.js in order to run the API. Follow the instructions below to install it:
+
+You will need to run the following to get the tools needed:
+
+```bash
+sudo apt install curl
+```
+
+Then, install Node.js
+
+```bash
+# Download and install nvm:
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.1/install.sh | bash
+# Download and install Node.js:
+nvm install 22 # You may have to restart your terminal before running this
+# Verify the Node.js version:
+node -v # Should print "v22.13.1".
+nvm current # Should print "v22.13.1".
+# Verify npm version:
+npm -v # Should print "10.9.2".
+```
+
+### Building the API
+
+You must have cloned the repository, as per the requirements. Change into the `/api` directory and run the following commands from there.
+
+Install the dependencies using npm (from inside `/api`):
+
+```bash
+npm install && npm audit fix
+```
+
+Then, build the API using:
+
+```bash
+npx tsc
+```
+
+Run the api using:
+
+```bash
+node index.js
+```
+
+### Building the Website
+
+### Running the Website
+
+## Securing The Server
+
+The following sections describe recommended security-related practices for any public deployment of this server. Currently, this includes adding a production web-server in front of our API and website ([Nginx](https://nginx.org)), as well as a firewall. For this tutorial, we will be using the `ufw` firewall, but you can use whatever one you would like.
+
+### Nginx
+
+Nginx is a web-server that sits "in front of" the API and website. Sort of like this:
+
+```mermaid
+graph LR
+    c[Client]
+    n[Nginx]
+    a[API]
+    w[Website]
+
+    c ---->|HTTPS| n
+    subgraph Server
+    n --> a
+    n --> w
+    end
+```
+
+#### Installing Nginx
+
+Run the following to install and enable the Nginx software on your system:
+```bash
+sudo apt install nginx
+```
+
+To verify this is working, you can go to: `https://localhost/` on the target system in a web browser, and you should see the Nginx welcome page (if you have a GUI available to you).
+
+As always, you can check the status of nginx with `systemctl`:
+
+```bash
+systemctl status nginx
+```
+
+The nginx service should be both *running* and *enabled*.
+
+#### Configuration
+
+#### Getting HTTPS Working
+
+### Firewall
+
+It is **highly** recommended to run a firewall on the server running the API and web server. For both the API and the web server, we must allow HTTP requests. For `ufw` firewall, run:
+
+```bash
+sudo ufw allow "Nginx Full"
+```
+> Note the above requires Nginx to be installed to work. This opens port 80 and port 443
+
+If `ufw` is not already enabled, you can enable it by running:
+```bash
+sudo ufw enable
+```
+
+!!! danger "SSH/Remote Desktop Connections"
+    
+    Before enabling the firewall, make sure that you have access to your server through a physical connection (like mouse and keyboard or serial port) or you allow ssh traffic with ufw like so: `sudo ufw allow 22/tcp`
 
 ## Firmware 
 
