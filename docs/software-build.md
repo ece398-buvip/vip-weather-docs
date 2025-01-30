@@ -170,7 +170,21 @@ node index.js
 
 ### Building the Website
 
-### Running the Website
+Change into the `/website` directory of `VIP_Weather`, and run the following to install necessary dependencies and fix audits:
+
+```bash
+npm install && npm audit fix
+```
+
+!!! Warning "Website Reaching API"
+
+    Currently, there is no *nice* way of changing the URL this website uses to fetch weather data. As of the writing of this documentation, you **MUST** change the URL present in the `getEnvironmentData()` function at the path: `/website/app/page.tsx`. Replace: `https://weather.jacobsimeone.net/api/envdata` with: `https://your.domain.here/api/envdata`.
+
+Then, to build and run the website, use the following commands:
+
+```bash
+sudo npm run build && npm run start
+```
 
 ## Securing The Server
 
@@ -213,7 +227,37 @@ The nginx service should be both *running* and *enabled*.
 
 #### Configuration
 
-#### Getting HTTPS Working
+Nginx configuration is typically stored in the `/etc/nginx/` directory. It is recommended to remove the default configuration with:
+
+```bash
+sudo rm /etc/nginx/sites-enabled/default
+```
+
+Then, create a new file `/etc/nginx/sites-enabled/weather-station` and copy/paste the following contents:
+
+```
+server {
+	server_name your.domain.here;
+
+	location / {
+		proxy_pass http://localhost:5050/;
+	}
+
+	location /api {
+		proxy_pass http://localhost:27500/api;
+	}
+}
+```
+
+Then, re-start the Nginx server for the changes to take effect:
+
+```bash
+sudo systemctl restart nginx
+```
+
+#### Securing with HTTPS
+
+TODO: [LetsEncrypt](https://www.digitalocean.com/community/tutorials/how-to-secure-nginx-with-let-s-encrypt-on-ubuntu-20-04)
 
 ### Firewall
 
@@ -235,10 +279,6 @@ sudo ufw enable
 
 ## Firmware 
 
-* directory
-* cp2102 drivers
-* pinout
-
 Ensure that an ESP32-DevkitM1 board is attached to your computer through a USB cable before attempting to flash firmware. 
 
 !!! warning "CP2102 Device Drivers"
@@ -247,7 +287,7 @@ Ensure that an ESP32-DevkitM1 board is attached to your computer through a USB c
 
 Navigate to the `/firmware` directory in the repository, and open it in VsCode and ensure the PlatformIO extension is installed. When the project opens, make sure that PlatformIO is started, and recognizes the project, otherwise the following commands will not work.
 
-With the project open, run the `TODO: BUILD COMMAND HERE` to build the firmware project, and then the `TODO: UPLOAD COMMAND` to upload the firmware to the attached device. The attached ESP32 should now be running the weather station firmware.
+With the project open, run the `PlatformIO: Build` to build the firmware project, and then the `PlatformIO: Upload` to upload the firmware to the attached device. The attached ESP32 should now be running the weather station firmware. (Access command palate using `ctrl+shift+p`). You can also use the icons at the bottom of the screen for building & uploading with PlatformIO.
 
 !!! info "Verify Firmware"
 
