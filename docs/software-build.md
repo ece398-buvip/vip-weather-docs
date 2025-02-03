@@ -1,12 +1,12 @@
-This tutorial describes how to build the software suite for the weather station. Make sure the target system(s) have the required software as described in the previous section.
+This tutorial describes how to build the software suite for the Weather Station. Make sure the target system(s) have the required software as described in the previous section.
 
 ## Clone the Repository
 
-Before building any software, you must have the most recent stable release of the weather station software suite located at our [GitHub Repository](https://github.com/ImtiazAtBradley/VIP_Weather/tree/main). All target devices must have the software needed to build the various services.
+Before building any software, you must have the most recent stable release of the Weather Station software suite located at our [GitHub Repository](https://github.com/ImtiazAtBradley/VIP_Weather/tree/main). All target devices must have the software needed to build the various services.
 
 ## Broker
 
-The Broker is the service that relays information between the deployed weather station, and the deployed server that holds the weather data. The broker is written using C++, using the [libcurl library](https://curl.se/libcurl/). Below is a simple block diagram of the broker's job:
+The Broker is the service that relays information between the deployed Weather Station and the deployed server that holds the weather data. The broker is written with C++ using the [libcurl library](https://curl.se/libcurl/). Below is a simple block diagram of the broker's job:
 
 ```mermaid
 graph LR
@@ -95,11 +95,11 @@ The API handles retrieving and posting all data to the underlying redis database
 
 !!! warning "Redis Database"
 
-    The redis database must be accessible at `localhost` on port `6379`. There is no security currently implemented, which is why this requirement exists.
+    The redis database must be accessible at `localhost` on port `6379`. There is currently no security implemented which is why this requirement exists.
 
 ### Installing Redis
 
-Run the following to install redis (the database that stores all the weather data):
+Run the following to install Redis, the database that stores all the weather data:
 
 ```bash
 sudo apt-get install lsb-release curl gpg
@@ -110,13 +110,13 @@ sudo apt-get update
 sudo apt-get install redis
 ```
 
-Ensure the redis database is running by checking the service's status using `systemctl`. You want to make sure it is running:
+Ensure the Redis database is running by checking the service's status using `systemctl`. You want to make sure it is running:
 
 ```bash
 systemctl status redis-server.service
 ```
 
-Make redis database start when computer starts with:
+Make Redis database start when computer starts with:
 ```bash
 sudo systemctl enable redis-server
 sudo systemctl start redis-server
@@ -124,7 +124,7 @@ sudo systemctl start redis-server
 
 ### Installing Nodejs
 
-You must install Node.js in order to run the API. Follow the instructions below to install it:
+You must install Node.js in order to run the API. Follow the instructions below to install it.
 
 You will need to run the following to get the tools needed:
 
@@ -132,7 +132,7 @@ You will need to run the following to get the tools needed:
 sudo apt install curl
 ```
 
-Then, install Node.js
+Then install Node.js:
 
 ```bash
 # Download and install nvm:
@@ -156,7 +156,7 @@ Install the dependencies using npm (from inside `/api`):
 npm install && npm audit fix
 ```
 
-Then, build the API using:
+Then build the API using:
 
 ```bash
 npx tsc
@@ -170,7 +170,7 @@ node index.js
 
 ### Building the Website
 
-Change into the `/website` directory of `VIP_Weather`, and run the following to install necessary dependencies and fix audits:
+Change into the `/website` directory of `VIP_Weather` and run the following to install necessary dependencies and fix audits:
 
 ```bash
 npm install && npm audit fix
@@ -180,7 +180,7 @@ npm install && npm audit fix
 
     Currently, there is no *nice* way of changing the URL this website uses to fetch weather data. As of the writing of this documentation, you **MUST** change the URL present in the `getEnvironmentData()` function at the path: `/website/app/page.tsx`. Replace: `https://weather.jacobsimeone.net/api/envdata` with: `https://your.domain.here/api/envdata`.
 
-Then, to build and run the website, use the following commands:
+Then to build and run the website, use the following commands:
 
 ```bash
 sudo npm run build && npm run start
@@ -188,7 +188,7 @@ sudo npm run build && npm run start
 
 ## Securing The Server
 
-The following sections describe recommended security-related practices for any public deployment of this server. Currently, this includes adding a production web-server in front of our API and website ([Nginx](https://nginx.org)), as well as a firewall. For this tutorial, we will be using the `ufw` firewall, but you can use whatever one you would like.
+The following sections describe recommended security-related practices for any public deployment of this server. Currently, this includes adding a production web-server in front of our API and website ([Nginx](https://nginx.org)) as well as a firewall. For this tutorial, we will be using the `ufw` firewall, but you can use whatever one you would like.
 
 ### Nginx
 
@@ -233,7 +233,7 @@ Nginx configuration is typically stored in the `/etc/nginx/` directory. It is re
 sudo rm /etc/nginx/sites-enabled/default
 ```
 
-Then, create a new file `/etc/nginx/sites-enabled/weather-station` and copy/paste the following contents:
+Then create a new file `/etc/nginx/sites-enabled/weather-station` and copy/paste the following contents:
 
 ```
 server {
@@ -249,7 +249,7 @@ server {
 }
 ```
 
-Then, re-start the Nginx server for the changes to take effect:
+Then re-start the Nginx server for the changes to take effect:
 
 ```bash
 sudo systemctl restart nginx
@@ -283,12 +283,12 @@ Ensure that an ESP32-DevkitM1 board is attached to your computer through a USB c
 
 !!! warning "CP2102 Device Drivers"
 
-    The ESP32-DevkitM1 board uses a CP2102 USB-to-UART chip to communicate between the connected USB device and the microcontroller. It is **very important** on Windows, that you have installed the [CP2102 device drivers](https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads), otherwise the ESP32 cannot communicate with the attached computer. Other operating systems have not been tested.
+    The ESP32-DevkitM1 board uses a CP2102 USB-to-UART chip to communicate between the connected USB device and the microcontroller. It is **very important** on Windows that you have installed the [CP2102 device drivers](https://www.silabs.com/developer-tools/usb-to-uart-bridge-vcp-drivers?tab=downloads) otherwise the ESP32 cannot communicate with the attached computer. Other operating systems have not been tested.
 
-Navigate to the `/firmware` directory in the repository, and open it in VsCode and ensure the PlatformIO extension is installed. When the project opens, make sure that PlatformIO is started, and recognizes the project, otherwise the following commands will not work.
+Navigate to the `/firmware` directory in the repository, open it in VsCode, and ensure the PlatformIO extension is installed. When the project opens, make sure that PlatformIO is started and recognizes the project, otherwise the following commands will not work.
 
-With the project open, run the `PlatformIO: Build` to build the firmware project, and then the `PlatformIO: Upload` to upload the firmware to the attached device. The attached ESP32 should now be running the weather station firmware. (Access command palate using `ctrl+shift+p`). You can also use the icons at the bottom of the screen for building & uploading with PlatformIO.
+With the project open, run the `PlatformIO: Build` to build the firmware project, and then the `PlatformIO: Upload` to upload the firmware to the attached device. The attached ESP32 should now be running the Weather Station firmware. (Access command palate using `ctrl+shift+p`) You can also use the icons at the bottom of the screen for building & uploading with PlatformIO.
 
 !!! info "Verify Firmware"
 
-    To ensure that firmware is working, put the development board back in the weather station and ensure the status LED is operating.
+    To ensure that firmware is working, put the development board back in the Weather Station and ensure the status LED is operating.

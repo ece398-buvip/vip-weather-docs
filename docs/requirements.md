@@ -33,7 +33,7 @@ The ECE 398 Weather Station also has a few printed parts to go along with the of
 
 ## Required Software
 
-The following software is required for the development/production of the weather station. Software under **Development** is just for development, while the software under the other sections is *required* for running the software suites.
+The following software is required for the development/production of the Weather Station. Software under **Development** is simply for development while the software under the other sections is *required* for running the software suites.
 
 ### Development
 
@@ -49,7 +49,7 @@ The following software is required for the development/production of the weather
 
 ### API & Website
 
-The API is required to be ran on the same server as the redis database. It is recommended as well, to host the website on this same server. The current implementation of weather station uses a server through [Linode](https://www.linode.com/). Specifically, the Nanode plan.
+The API is required to be ran on the same server as the Redis database. It is also recommended to host the website on the same server. The current implementation of Weather Station uses a server through [Linode](https://www.linode.com/), specifically the Nanode plan.
 
 The API requirements are:
 
@@ -65,11 +65,11 @@ The API requirements are:
 
 !!! info "CPU Requirements"
 
-    Almost any CPU will do for running the Website. Absolute minimum requirements have not been measured
+    Almost any CPU will do for running the Website. Absolute minimum requirements have not been measured.
 
 ### Broker
 
-The broker has to be on-site, within range of the weather station's LoRa radio. It is recommended to run this on a Raspberry Pi 3B+, because that is what was tested and deployed in the initial design. The broker must be passed the device file which the RYLR896 radio UART is attached to.
+The broker has to be on-site and within range of the Weather Station's LoRa radio. It is recommended to run this on a Raspberry Pi 3B+ because that is what was tested and deployed in the initial design. The broker must be passed the device file which the RYLR896 radio UART is attached to.
 
 | Param | Recommended |
 | --- | --- |
@@ -78,7 +78,7 @@ The broker has to be on-site, within range of the weather station's LoRa radio. 
 
 !!! info "CPU Requirements"
 
-    Almost any CPU will do for running the Broker. Absolute minimum requirements have not been measured
+    Almost any CPU will do for running the Broker. Absolute minimum requirements have not been measured.
 
 ### Firmware
 
