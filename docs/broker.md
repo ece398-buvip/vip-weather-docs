@@ -19,3 +19,14 @@ wsR -->|LoRa| bR
 
 broker -->|HTTP POST| API
 ```
+
+# Running the Broker
+
+The broker application comes with a file: `start-broker.sh` that gives an example for starting the broker. It is up to the user to find the device file that corresponds to the connected RYLR896 radio. There are lots of tutorials for this on the internet, but some useful commands are:
+
+- `ls -l /dev/tty*` -> List attached tty device files. Some common names are `ttySX`, `ttyACMX`, `ttyUSBX`, depending on how the port is connected.
+- `sudo picocom -b <baud rate> <device file>` -> Open a terminal to read data from serial port
+
+**start-broker.sh** example:
+
+`./build/bradley-cast-broker /dev/ttyS0 https://weather.jacobsimeone.net/api/envdata ./api.key`
