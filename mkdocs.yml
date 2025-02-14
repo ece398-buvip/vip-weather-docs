@@ -52,6 +52,7 @@ nav:
     - Battery Box Temp Measurement: posts/battery-box.md
     - Bradley-Cast Protocol (Proposed): posts/bradley-cast.md
     - ESP32-Rf Range Test: posts/esp32-rf-range.md
+    - Campus Temperature Test: posts/over-campus-test.md
   
 # Extensions
 markdown_extensions:
