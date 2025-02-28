@@ -2,6 +2,6 @@ The following is the master circuit diagram for the weather station hardware dep
 
 ![](./images/ws-circuit.png)
 
-## Notes:
+## Notes
 
 * The photoresistor is at roughly 2k Ohms in a well-lit room
