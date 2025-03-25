@@ -48,6 +48,7 @@ nav:
   - Broker: broker.md
   - Website: website.md
   - Firmware: firmware.md
+  - Custom RTD Board: rtd-board.md
   - ASCII Protocol: protocol.md
   - Posts:
       - Battery Box Temp Measurement: posts/battery-box.md
