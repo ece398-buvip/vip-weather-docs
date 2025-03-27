@@ -1,4 +1,4 @@
-This is the proposed "Bradley-Cast" binary protocol that the weather station will (hopefully) eventually use. Currently, the weather station implements a simpler ASCII-based protocol which is documented elsewhere.
+This is the proposed "Bradley-Cast" binary protocol that the weather station will (hopefully) eventually use. Currently, the Weather Station implements a simpler ASCII-based protocol which is documented elsewhere.
 
 !!! warning "Protocol Not Part of Weather Station Right Now"
 
@@ -22,9 +22,9 @@ We have the following integer data to transmit:
 | Humidity | 16 | percent | x100 | no |
 | Pressure | 16 | kPa | x100 | no |
 
-Notice the scale parameter set in the table. This is to guarantee fixed point data only on the link between the microcontroller and the pi.
+Notice the scale parameter set in the table. This is to guarantee fixed point data only on the link between the microcontroller and the Pi.
 
-Example: The temperature sensor reads 25.62°C, which is 32 bit. We don't want to transmit the decimal point, as that increases the bit count. So, instead, we can do this:
+Example: The temperature sensor reads 25.62°C, which is 32 bit. We don't want to transmit the decimal point, as that increases the bit count. Instead, we can do this:
 In the microcontroller, multiply the value by 100. 25.62 x 100 = 2562. Then we transmit this to the Raspberry Pi.
 The Raspberry Pi picks up 2562, and we tell the Pi to divide the value by 100, turning it back into 25.62°C. This is where the scale comes from. 
 
@@ -77,7 +77,7 @@ Where `RSCG` is:
 However, we are assuming that the Raspberry Pi is receiving data from different microcontrollers. 
 Thus, we need a way to identify the microcontrollers so that the Pi can differentiate between them. We do this with an ID.
 We add a unique ID in front of the microcontroller and the environmental message.
-So, transmission would look like this:
+The transmission would look like this:
 
 `[ID][ENV MSG]` instead of just `[ENV MSG]` to the Raspberry Pi.
 Now we can have unique IDs for each microcontroller to send data to the Pi.

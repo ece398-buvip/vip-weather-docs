@@ -50,7 +50,7 @@ This will build both the `bradley-cast-broker` and `bradley-cast-broker-test` ex
 
 ### Running the Broker
 
-Running the broker requires the serial device file attached to the RYLR896 radio, the API endpoint of the server, and the api key file that is attached to the JSON request header.
+Running the broker requires the serial device file attached to the RYLR896 radio, the API endpoint of the server, and the API key file that is attached to the JSON request header.
 
 The following "help" will be outputted when the executable is ran:
 ```

@@ -58,7 +58,7 @@ Maintainers of the Weather Station should be proficient in the following technol
 * [Nginx](https://nginx.org/en/) - Web server
 
 ### Website
-* [Next.js](https://nextjs.org/) web framewortk
+* [Next.js](https://nextjs.org/) web framework
 
 ## User Manual
 
