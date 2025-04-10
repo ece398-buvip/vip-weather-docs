@@ -11,6 +11,11 @@ theme:
   features:
     - navigation.footer
     - navigation.sections
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.top
+    - toc.follow
+    - toc.integrate
 
   favicon: images/favicon.png
   icon:
@@ -39,17 +44,19 @@ theme:
 
 # Navigation
 nav:
-  - The ECE398 Weather Station: index.md
-  - Build Requirements: requirements.md
-  - Hardware Build: build.md
-  - Circuit Diagram: circuit-diagrams.md
-  - Software Build: software-build.md
-  - API: api.md
-  - Broker: broker.md
-  - Website: website.md
-  - Firmware: firmware.md
-  - Custom RTD Board: rtd-board.md
-  - ASCII Protocol: protocol.md
+  - Home:
+    - The ECE398 Weather Station: index.md
+  - Getting Started:
+    - Build Requirements: requirements.md
+    - Hardware Build: build.md
+    - Circuit Diagram: circuit-diagrams.md
+    - Software Build: software-build.md
+    - API: api.md
+    - Broker: broker.md
+    - Website: website.md
+    - Firmware: firmware.md
+    - Custom RTD Board: rtd-board.md
+    - ASCII Protocol: protocol.md
   - Posts:
       - Battery Box Temp Measurement: posts/battery-box.md
       - Bradley-Cast Protocol (Proposed): posts/bradley-cast.md
