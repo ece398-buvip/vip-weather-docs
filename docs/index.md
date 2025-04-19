@@ -1,20 +1,20 @@
----
-hide:
-    - navigation
----
-![](images/ws-cover.jpg)
+![](images/ws-cover.png)
 
 The ECE 398 Weather Station was designed and realized by students enrolled in Vertically Integrated Projects in the Electrical Engineering department at Bradley University. This project aims to provide students on Bradley's campus a way to monitor and log weather data. In the future, we hope this project expands to hosting multiple weather nodes that can all work together to accurately predict weather on campus.
 
-In its current form, the Weather Station is just one node that uploads data to a server which is accessible at [weather.jacobsimeone.net](https://weather.jacobsimeone.net).
-
 This site serves to document the Weather Station software and provides instruction for running the software on other systems efficiently.
 
-CAD models can be found on [OnShape](https://cad.onshape.com/documents/38c15368c41f2224b0adceca/w/e0d05cb6b75a73d47582f798/e/6f88f03cdb676fd77e352c81?renderMode=0&uiState=679021283de53a2916d306de).
+## Accessing Our Data
+
+In its current form, the Weather Station is just one node that uploads data to a server which is accessible at [weather.jacobsimeone.net](https://weather.jacobsimeone.net).
+
+This website gets its data from a publicly-accessible API, which users are also free to use at [weather.jacobsimeone.net/api/envdata](https://weather.jacobsimeone.net/api/envdata)
 
 ## Design Overview
 
-The ECE 398 Weather Station project is split up into four primary pieces of software:
+The hardware used in the weather station is either off-the-shelf or 3d-printed in-house on Prusa Mk4S printers. Our CAD can be found on [OnShape](https://cad.onshape.com/documents/38c15368c41f2224b0adceca/w/e0d05cb6b75a73d47582f798/e/6f88f03cdb676fd77e352c81?renderMode=0&uiState=679021283de53a2916d306de).
+
+Furthermore, the ECE 398 Weather Station project is split up into four primary pieces of software:
 
 * The **Firmware**, which runs on the microcontroller that collects the data
 * A **Broker**, which "translates" LoRa messages into network traffic that can be posted to the API
@@ -22,19 +22,23 @@ The ECE 398 Weather Station project is split up into four primary pieces of soft
 * The **Website**, an example of implementation for what one can do with the data and is how we currently share our data.
 
 ```mermaid
-graph LR
+graph TD
     subgraph Weather Station
-    ws[Weather Station]
+        sen[Sensors]
+        ws[Weather Station Controller]
+        lr[LoRa Radio]
+        sen -->|SPI| ws
+        ws -->|UART| lr
     end
-    ws[Weather Station] -->|LoRa| b[Broker]
+    lr -->|LoRa| blr[Broker Radio]
     subgraph On-Site Server
-    b
+        blr -->|UART| b[Broker]
     end
     b -->|Over Internet, JSON| api([API, node.js])
     subgraph Cloud Server
-    api --> db[(Database, redis)]
-    db --> api
-    api -->|JSON| web[Website, Next.js]
+        api --> db[(Database, redis)]
+        db --> api
+        api -->|JSON| web[Website, Next.js]
     end
     c[Client] --> web
     web --> c
@@ -66,4 +70,19 @@ Maintainers of the Weather Station should be proficient in the following technol
 
 ## User Manual
 
-* TODO: LED Codes
+### Blink Codes
+
+When powering on the station, the status LED will tell the user what is going on:
+
+| Blink Code | Reason |
+| --- | --- |
+| Off | OK/Idle |
+| On | Booting / Boot Retry |
+| Slow Blink | Boot Failed | 
+| Very fast blink | Transmit |
+
+### Inside the Station
+
+This shows the parts inside of the station that are commonly used by maintainers
+
+![](./images/ws-inside-wiring.png)
