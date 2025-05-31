@@ -1,5 +1,3 @@
-![](images/ws-cover.png)
-
 The ECE 398 Weather Station was designed and realized by students enrolled in Vertically Integrated Projects in the Electrical Engineering department at Bradley University. This project aims to provide students on Bradley's campus a way to monitor and log weather data. In the future, we hope this project expands to hosting multiple weather nodes that can all work together to accurately predict weather on campus.
 
 This site serves to document the Weather Station software and provides instruction for running the software on other systems efficiently.
