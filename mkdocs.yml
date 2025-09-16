@@ -1,6 +1,6 @@
 site_name: ECE398 Weather Station Docs
-site_url: https://litemage.github.io/vip-weather-docs/
-repo_url: https://github.com/ImtiazAtBradley/VIP_Weather
+site_url: https://ece398-buvip.github.io/vip-weather-docs/
+repo_url: https://github.com/ece398-buvip/vip-weather-docs
 theme:
   name: material
 
